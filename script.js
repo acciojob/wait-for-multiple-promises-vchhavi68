@@ -3,13 +3,13 @@ const output = document.getElementById("output");
 
 
 const loadingRow = document.createElement("tr");
-loadingRow.id = "loading-row";
+loadingRow.id = "loading"; 
 loadingRow.innerHTML = `<td colspan="2" class="text-center">Loading...</td>`;
 output.appendChild(loadingRow);
 
 function createPromise(id) {
   return new Promise((resolve) => {
-    const delay = Math.random() * 2 + 1; // 1 ≤ delay < 3 seconds
+    const delay = Math.random() * 2 + 1; 
     setTimeout(() => {
       resolve({ id, time: delay });
     }, delay * 1000);
