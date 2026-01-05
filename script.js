@@ -3,16 +3,15 @@ const output = document.getElementById("output");
 
 
 const loadingRow = document.createElement("tr");
-loadingRow.id = "loading";
+loadingRow.id = "loading"; // must match Cypress test
 loadingRow.innerHTML = `<td colspan="2" class="text-center">Loading...</td>`;
 output.appendChild(loadingRow);
 
+
 function createPromise(id) {
   return new Promise((resolve) => {
-    const delay = Math.random() * 2 + 1; 
-    setTimeout(() => {
-      resolve({ id, time: delay });
-    }, delay * 1000);
+    const delay = Math.random() * 2 + 1; // 1 <= delay < 3
+    setTimeout(() => resolve({ id, time: delay }), delay * 1000);
   });
 }
 
@@ -20,12 +19,9 @@ function createPromise(id) {
 const promises = [createPromise(1), createPromise(2), createPromise(3)];
 
 
-const startTime = performance.now();
-
-
 Promise.all(promises).then((results) => {
-  
-  const loading = document.getElementById("loading-row");
+  // Remove Loading row
+  const loading = document.getElementById("loading");
   if (loading) loading.remove();
 
   
@@ -35,13 +31,11 @@ Promise.all(promises).then((results) => {
       <td>Promise ${result.id}</td>
       <td>${result.time.toFixed(3)}</td>
     `;
-    const loading = document.getElementById("loading");
-if (loading) loading.remove(); 
+    output.appendChild(tr);
   });
 
-  
-  const totalTime = results.reduce((max, p) => Math.max(max, p.time), 0);
 
+  const totalTime = results.reduce((max, p) => Math.max(max, p.time), 0);
   const trTotal = document.createElement("tr");
   trTotal.innerHTML = `
     <td>Total</td>
@@ -49,3 +43,4 @@ if (loading) loading.remove();
   `;
   output.appendChild(trTotal);
 });
+  
