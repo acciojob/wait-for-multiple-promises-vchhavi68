@@ -3,7 +3,7 @@ const output = document.getElementById("output");
 
 
 const loadingRow = document.createElement("tr");
-loadingRow.id = "loading"; 
+loadingRow.id = "loading";
 loadingRow.innerHTML = `<td colspan="2" class="text-center">Loading...</td>`;
 output.appendChild(loadingRow);
 
@@ -35,12 +35,12 @@ Promise.all(promises).then((results) => {
       <td>Promise ${result.id}</td>
       <td>${result.time.toFixed(3)}</td>
     `;
-    output.appendChild(tr);
+    const loading = document.getElementById("loading");
+if (loading) loading.remove(); 
   });
 
   
-  const endTime = performance.now();
-  const totalTime = (endTime - startTime) / 1000;
+  const totalTime = results.reduce((max, p) => Math.max(max, p.time), 0);
 
   const trTotal = document.createElement("tr");
   trTotal.innerHTML = `
